@@ -33,13 +33,26 @@ if len(sys.argv) < 2:
     sys.exit()
 
 # If a fast forward point in the events is passed in, then we only animate starting at that point (since we only want to see events after that)
-if len(sys.argv) == 3:
+if len(sys.argv) < 3:
+    print "No time step between events passed in"
+    sys.exit()
+else:
+    try:
+        event_gap = float(sys.argv[2])
+    except Exception as e:
+        print "Error parsing time step (should be an float)"
+        raise e
+
+# If a fast forward point in the events is passed in, then we only animate starting at that point (since we only want to see events after that)
+if len(sys.argv) == 4:
     print "Fast forwarding to set breakpoint event!"
     try:
-        fast_forward = int(sys.argv[2])
+        fast_forward = int(sys.argv[3])
     except Exception as e:
         print "Error parsing fast forward point (should be an integer)"
         raise e
+else:
+    fast_forward = 0
 
 sim_file = file(sys.argv[1], "r")
 
@@ -96,4 +109,4 @@ for i, event in enumerate(events):
 
     if animate:
         pygame.display.flip()
-        time.sleep(0.1)
+        time.sleep(event_gap)
