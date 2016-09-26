@@ -217,6 +217,8 @@ class TrafficState:
         if animate:
             inter_to_fin(self.wait, self.inter, origin, dest)
 
+        update_graphics(self.wait, self.inter)
+
 
 # We initialize pygame here so we have access to the window parameters
 window_side_length = 800
